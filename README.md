@@ -2,13 +2,13 @@
 
 Hoje em dia, o termo People Analytics tem ganhado cada vez mais popularidade. Em resumo, people analytics representa um conjunto de técnicas e métodos que são orientados a dados e focados em entender os processos, comportamentos e oportunidades das pessoas dentro das organizações, guiando os times de recursos humanos nas tomadas de decisões.
 
-Vários times de recursos humanos podem se beneficiar desse tipo de análise. Algumas abordagens mais conhecidas são o apoio no processo de seleção de talentos, estudos de performance e remuneração, e a criação de times colaborativos.
+Vários times de RH podem se beneficiar desse tipo de análise. Algumas abordagens mais conhecidas são o apoio no processo de seleção de talentos, estudos de performance e remuneração, e a criação de times colaborativos.
 
-Nesse post, vou mostrar um exemplo utilizando python de como os dados podem ajudar a prever a rotatividade dentro da organização. Esse modelo consegue prever quando um funcionário pretende sair da empresa e ajuda o time de atração e seleção a se preparar para que as cadeiras não fiquem vazias! 
+Nesse post, vou mostrar um exemplo utilizando python de como os dados podem ajudar a prever a rotatividade dentro da organização. Esse modelo consegue prever quando um funcionário pretende sair da empresa e ajuda o time de atração e seleção a se preparar para que as cadeiras não fiquem vazias!
 
 **Vamos começar?**
 
-Aqui eu vou mostrar os principais comandos pra gerar os resultados, e mais detalhes do código podem ser vistos no arquivo Estudo-Rotatividade.ipynb.
+Aqui eu vou mostrar os principais comandos pra gerar os resultados, e mais detalhes do código podem ser vistos no arquivo Estudo-Rotatividade.ipynb. Como a ideia é que seja um estudo para iniciantes na área, vou evitar explicações complexas de teoria e programação.
 
 Começamos então com a leitura da base e uma análise dos atributos que vamos utilizar pra construir o modelo :)
 
@@ -144,3 +144,5 @@ Meu objetivo é fazer mais posts iguais a este, mostrando outras aplicações e 
 
 Valeu pela atenção, e espero que tenha curtido ;)
 Qualquer dúvida, meu email é *brunosena4@gmail.com*
+
+*Referências: os dados utilizados nesse estudo são públicos, e tanto o dataset quanto a inspiração para o estudo vieram de um curso chamado: Human Resources Analytics: Predicting Employee Churn in Python, disponível nesse [link](https://learn.datacamp.com/)
