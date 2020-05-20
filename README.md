@@ -79,3 +79,43 @@ dados = dados.join(pd.get_dummies(dados.department))
 dados.drop("department", axis = 1, inplace = True)
 dados.drop("management", axis = 1, inplace = True)
 ```
+**Criação do modelo**
+
+Vamos pro modelo então?
+
+A primeira coisa que temos que pensar, é que precisamos de alguma forma validar se o nosso modelo está decidindo com qualidade se o funcionário saiu ou não da empresa. Pra isso, precisamos de alguns dados para testarmos o modelo e checar se ele acerta. Um ponto de atenção quando vamos validar o nosso modelo, é que não podemos checar a eficiência dele em algum dado que ele usou pra aprender! É a mesma coisa que decorar um monte de respostas de perguntas e ir fazer uma prova. Podemos tirar 10, mas isso não garante que aprendemos alguma coisa.
+
+A técnica mais utilizada pra lidar com isso, é separar a nossa amostra de dados em dois grupos: treino e teste. Os dados de treino vão ser utilizados para que o modelo aprenda quais são os padrões que podem ser generalizados pra decidir se o funcionário vai sair ou não da empresa, e os dados de teste (não vistos pelo modelo antes) são utilizados para checar se o modelo aprendeu bem. 
+
+O código abaixo cumpre dois objetivos: divide a nossa tabela em duas (a tabela com todas as 9 variáveis que vão ser utilizadas para que o modelo identifique os padrões, e uma outra só com a coluna churn que queremos prever) e a seguir separa essas tabelas em um grupo de treino e um grupo de teste. Nesse caso, 80% dos funcionários estão no conjunto de treino e 20% no de teste.
+
+Com isso feito, agora é só construir o modelo!
+
+Nesse exemplo, como já mencionei, estou usando uma árvore de decisão. Detalhes sobre como ela funciona pode ser encontrado [aqui](https://medium.com/machine-learning-beyond-deep-learning/%C3%A1rvores-de-decis%C3%A3o-3f52f6420b69). No geral, ela identifica padrões nas variáveis e cria regras de negócio para poder classificar se um funcionário sairá ou não da empresa. Quando terminarmos de construir, eu mostro um exemplo visual que esclarece o funcionamento dela.
+
+Muita gente se assusta com essa etapa de criação do modelo, mas ela é bem simples, é só executar esse código abaixo.
+
+```
+arvore_decisao = DecisionTreeClassifier(max_depth = 4, random_state = 42, min_samples_leaf = 100)
+```
+
+*Obs: não vou entrar em detalhes do porque dos parâmetros max_depth e min_samples_leaf para não deixar o post complexo, mas a ideia é que essas "caracteristicas" da árvore façam com que ela gere melhores resultados, nesse caso.*
+
+Com a árvore construida, a gente só precisa passar os dados de treino pra ela (as 9 features e qual o impacto da combinação delas na vida do funcionário) e ela encontra os padrões sozinha! A ideia dessa função *fit* é que ela adapta a árvore para representar o conjunto de dados que esta recebendo.
+
+```
+arvore_decisao.fit(dados_treino, resposta_treino)
+```
+
+Pronto! a árvore esta criada, já aprendeu os padrões e daqui em diante é só melhorar ela até que esteja do jeito que queremos pra ser aplicada. Vou finalizar esse post mostrando os resultados que conseguimos com ela.
+
+**Avaliação**
+
+O código abaixo utiliza a árvore que construimos para prever se os funcionários que estão no conjunto de teste sairão ou não da empresa. A imagem a seguir sumariza os principais resultados.
+
+```
+predicao_teste = arvore_decisao.predict(dados_teste)
+labels = ['True Neg','False Pos','False Neg','True Pos']
+categories = ['Zero', 'One']
+make_confusion_matrix(confusion_matrix(resposta_teste, predicao_teste), group_names=labels, categories=categories, cmap='YlOrBr', cbar = False, percent = False)
+```
