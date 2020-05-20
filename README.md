@@ -119,3 +119,28 @@ labels = ['True Neg','False Pos','False Neg','True Pos']
 categories = ['Zero', 'One']
 make_confusion_matrix(confusion_matrix(resposta_teste, predicao_teste), group_names=labels, categories=categories, cmap='YlOrBr', cbar = False, percent = False)
 ```
+
+![Resultados nos dados de teste](teste.png)
+
+Vou tentar resumir essa imagem sem complicar muito. Na vertical, nós temos a informação real daqueles funcionários (Zero = eles não sairam da empresa, One = eles sairam da empresa). Na horizontal, temos a predição que a nossa árvore gerou (Zero = o funcionário não vai sair da empresa, One = ele vai sair da empresa). Portanto, no primeiro quadrante da matriz nós temos os True Negatives, isto é, o número de pessoas que a nossa arvore disse que não ia sair da empresa e que de fato não sairam. No ultimo quadrante, temos os True Positives, ou seja, o número de pessoas que a nossa árvore disse que iria sair e que de fato sairam. Os false positives e false negatives são aqueles em que nossa árvore disse que fariam uma coisa, mas na realidade fizeram outra.
+
+Logo abaixo, temos algumas métricas que resumem esses resultados. Vou explicar aqui a *accuracy, precision e recall*. 
+
+- Accuracy: representa o número de acertos totais da nossa árvore. Nesse caso, indica que ela acertou a resposta de 96% dos funcionários dos dados de teste. Entretanto, quando lidamos com dados desbalanceados, essa métrica não é recomendada pois menospreza a classe com menos amostras.
+- Precision: essa métrica é mais interessante quando temos classes desbalanceadas. Para entender ela, é só fazer a seguinte pergunta: Dentre todos aqueles que a minha árvore disse que iria sair, quantos sairam? Dentre todos aqueles que a minha árvore disse que não iria sair, quantos não sairam? A média dessas duas respostas é a nossa precisão (93.7%). Notamos que aqui damos um "peso igual" para ambas as classes e podemos ter resultados mais representativos.
+- Recall: possui certa similaridade com a precisão em entendimento. Para ela, fazemos as perguntas: Dentre todos aqueles que nós sabemos que sairam da empresa, quantos a nossa árvore acertou? Dentre todos aqueles que nós sabemos que não sairam da empres, quantos a nossa árvore acertou? A média disso é o nosso recall.
+
+O uso das métricas certas é muito importante pra avaliar nossos modelos. Quando reportamos os resultados com as métricas erradas, podemos disseminar uma falsa eficiência dentro da nossa empresa.
+
+Na figura abaixo, eu mostro um "corte" da árvore gerada nesse nosso modelo. Essa é a vantagem de usar uma árvore! além do resultado, ainda podemos entender como eles foram obtidos!
+
+![Árvore de decisão](arvore.png)
+
+O entendimento aqui é simples, o SIM é sempre pra direita e o NÃO é sempre pra esquerda. No quadro superior, temos a pergunta: satisfaction <= 0.465? Se a resposta for não, descemos para o quadro azul claro onde a pergunta é number_of_projects <= 2.5 ? Se a resposta for não, chegamos no nó final onde a class = [1]. O racional que construimos é o seguinte: se a satisfação do funcionário for menor que 0.465 e o número médio de projetos dele for 2.5, ele provavelmente vai deixar a empresa (class y[1])!
+
+Bom! Se você chegou aqui.. nesse post era isso o que eu queria mostrar! Não me aprofundei em nenhum conceito porque o objetivo era mostrar como a aplicação pode ser util para tomar decisões dentro do RH nas organizações. 
+
+Meu objetivo é fazer mais posts iguais a este, mostrando outras aplicações e detalhando algumas dessas técnicas.
+
+Valeu pela atenção, e espero que tenha curtido ;)
+Qualquer dúvida, meu email é *brunosena4@gmail.com*
